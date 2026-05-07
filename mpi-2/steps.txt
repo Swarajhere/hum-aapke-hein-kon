@@ -1,0 +1,201 @@
+========================================
+MPI PROGRAM EXECUTION STEPS (LINUX)
+========================================
+
+========================================
+PART 1  RUNNING ON SAME MACHINE
+========================================
+
+----------------------------------------
+STEP 1  CHECK JAVA VERSION
+----------------------------------------
+
+java -version
+javac -version
+
+Recommended
+JDK 8
+
+----------------------------------------
+STEP 2  CHECK MPJ INSTALLATION
+----------------------------------------
+
+Example MPJ Path
+homeusermpj
+
+Check
+ls homeusermpj
+
+----------------------------------------
+STEP 3  GO TO PROJECT FOLDER
+----------------------------------------
+
+Example
+cd ~mpi
+
+----------------------------------------
+STEP 4  COMPILE PROGRAM
+----------------------------------------
+
+Syntax
+
+javac -cp .homeusermpjlibmpj.jar FileName.java
+
+Example
+
+javac -cp .homeusermpjlibmpj.jar MPISum.java
+
+----------------------------------------
+STEP 5  RUN PROGRAM
+----------------------------------------
+
+Syntax
+
+homeusermpjbinmpjrun.sh -np 4 ClassName
+
+Example
+
+homeusermpjbinmpjrun.sh -np 4 MPISum
+
+----------------------------------------
+EXPLANATION
+----------------------------------------
+
+-np 4
+means
+4 parallel MPI processes
+
+----------------------------------------
+EXPECTED OUTPUT
+----------------------------------------
+
+Process 0 Local Sum 3
+Process 1 Local Sum 7
+Process 2 Local Sum 11
+Process 3 Local Sum 15
+
+Final Sum 36
+
+========================================
+PART 2  RUNNING ON DIFFERENT MACHINES
+========================================
+
+========================================
+REQUIREMENTS
+========================================
+
+1. Both machines connected to same network
+2. MPJ installed on both machines
+3. Same Java version on both systems
+4. Same Java files on both systems
+
+Example
+
+Machine 1 IP
+192.168.1.10
+
+Machine 2 IP
+192.168.1.11
+
+========================================
+STEP 1  CHECK IP ADDRESS
+========================================
+
+Run on both systems
+
+hostname -I
+
+----------------------------------------
+Example
+----------------------------------------
+
+192.168.1.10
+
+========================================
+STEP 2  COMPILE PROGRAM ON BOTH SYSTEMS
+========================================
+
+Example
+
+javac -cp .homeusermpjlibmpj.jar MPISum.java
+
+========================================
+STEP 3  START MPJ DAEMON
+========================================
+
+Run on BOTH machines
+
+homeusermpjbinmpjdaemon.sh
+
+Keep terminal open.
+
+========================================
+STEP 4  CREATE MACHINES FILE
+========================================
+
+Create file named
+machines
+
+Contents
+
+192.168.1.10
+192.168.1.11
+
+One IP per line.
+
+========================================
+STEP 5  RUN PROGRAM FROM MASTER MACHINE
+========================================
+
+Run ONLY on Machine 1
+
+homeusermpjbinmpjrun.sh -machinesfile machines -np 4 MPISum
+
+========================================
+WHAT HAPPENS INTERNALLY
+========================================
+
+1. Root process starts execution
+2. MPI distributes processes on both machines
+3. Scatter distributes array chunks
+4. Each process computes locally
+5. Gather collects results at root
+
+========================================
+COMMON ERRORS
+========================================
+
+1. mpjrun.sh not found
+= Wrong MPJ path
+
+2. Permission denied
+= Use
+chmod +x mpjrun.sh
+
+3. Connection refused
+= Firewall issue
+
+4. Host unreachable
+= Wrong IP address
+
+5. Class not found
+= Program not compiled on both systems
+
+========================================
+IMPORTANT NOTES
+========================================
+
+1. n must be divisible by number of processes
+
+Example
+n = 8
+np = 4
+
+2. Use JDK 8 for MPJ 0.44
+
+3. File name and class name must match
+
+4. Do NOT name file
+MPI.java
+
+========================================

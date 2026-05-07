@@ -1,0 +1,246 @@
+========================================
+RMI PROGRAM EXECUTION STEPS (LINUX)
+========================================
+
+========================================
+REQUIRED FILES
+========================================
+
+Example Folder:
+
+RMI_Calc/
+
+Files:
+1. Calc.java          -> Remote Interface
+2. CalcImpl.java      -> Remote Object Implementation
+3. Server.java        -> RMI Server
+4. Client.java        -> RMI Client
+
+========================================
+PART 1 : RUNNING ON SAME MACHINE
+========================================
+
+----------------------------------------
+STEP 1 : CHECK JAVA VERSION
+----------------------------------------
+
+java -version
+javac -version
+
+RMI works with:
+JDK 8 / 11 / 17
+
+----------------------------------------
+STEP 2 : GO TO PROJECT FOLDER
+----------------------------------------
+
+Example:
+
+cd ~/RMI_Calc
+
+----------------------------------------
+STEP 3 : COMPILE JAVA FILES
+----------------------------------------
+
+javac *.java
+
+----------------------------------------
+STEP 4 : START RMI REGISTRY
+----------------------------------------
+
+rmiregistry
+
+Keep this terminal running.
+
+----------------------------------------
+Alternative:
+----------------------------------------
+
+rmiregistry 1099
+
+1099 is default RMI port.
+
+----------------------------------------
+STEP 5 : RUN SERVER
+----------------------------------------
+
+Open NEW terminal:
+
+java Server
+
+----------------------------------------
+EXPECTED OUTPUT
+----------------------------------------
+
+Server Ready...
+
+----------------------------------------
+STEP 6 : RUN CLIENT
+----------------------------------------
+
+Open another terminal:
+
+java Client
+
+========================================
+EXPECTED OUTPUT
+========================================
+
+Enter first number: 10
+Enter second number: 5
+
+Result: 15
+
+========================================
+HOW RMI WORKS
+========================================
+
+1. Server creates remote object
+2. Server registers object in RMI Registry
+3. Client looks up remote object
+4. Client invokes remote method
+5. Server executes method
+6. Result sent back to client
+
+========================================
+PART 2 : RUNNING ON DIFFERENT MACHINES
+========================================
+
+========================================
+REQUIREMENTS
+========================================
+
+1. Both machines connected to same network
+2. Java installed on both systems
+3. Same Java files/classes on both systems
+
+Example:
+
+Server IP:
+192.168.1.10
+
+========================================
+STEP 1 : CHECK SERVER IP
+========================================
+
+Run on server machine:
+
+hostname -I
+
+Example:
+
+192.168.1.10
+
+========================================
+STEP 2 : COMPILE FILES ON SERVER
+========================================
+
+javac *.java
+
+========================================
+STEP 3 : START RMI REGISTRY
+========================================
+
+On SERVER machine:
+
+rmiregistry
+
+Keep terminal open.
+
+========================================
+STEP 4 : RUN SERVER
+========================================
+
+On SERVER machine:
+
+java Server
+
+========================================
+STEP 5 : MODIFY CLIENT CODE
+========================================
+
+Change:
+
+Naming.lookup("rmi://localhost/Calc")
+
+TO:
+
+Naming.lookup("rmi://192.168.1.10/Calc")
+
+Use actual server IP.
+
+========================================
+STEP 6 : COMPILE CLIENT
+========================================
+
+On CLIENT machine:
+
+javac Client.java
+
+========================================
+STEP 7 : RUN CLIENT
+========================================
+
+java Client
+
+========================================
+WHAT HAPPENS INTERNALLY
+========================================
+
+1. Client contacts RMI Registry
+2. Registry returns remote object reference
+3. Client invokes remote method remotely
+4. Server executes method
+5. Result returned to client
+
+========================================
+COMMON ERRORS
+========================================
+
+1. Connection refused
+=> rmiregistry not running
+
+2. NotBoundException
+=> Object not registered properly
+
+3. UnknownHostException
+=> Wrong IP address
+
+4. ClassNotFoundException
+=> Files not compiled
+
+5. Port blocked
+=> Firewall issue
+
+========================================
+IMPORTANT NOTES
+========================================
+
+1. Start rmiregistry BEFORE server
+
+2. Keep registry terminal running
+
+3. Default RMI port:
+1099
+
+4. Same interface file required on client and server
+
+5. Server IP required for distributed execution
+
+========================================
+EXAMPLE COMMANDS
+========================================
+
+Compile:
+javac *.java
+
+Start Registry:
+rmiregistry
+
+Run Server:
+java Server
+
+Run Client:
+java Client
+
+========================================

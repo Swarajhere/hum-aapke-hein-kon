@@ -1,0 +1,233 @@
+========================================
+BERKELEY ALGORITHM EXECUTION STEPS
+(PYTHON SOCKET PROGRAM)
+========================================
+
+========================================
+REQUIRED FILES
+========================================
+
+1. server.py
+2. client.py
+
+========================================
+PART 1 : RUNNING ON SAME MACHINE
+========================================
+
+----------------------------------------
+STEP 1 : CHECK PYTHON VERSION
+----------------------------------------
+
+python3 --version
+
+OR
+
+python --version
+
+----------------------------------------
+STEP 2 : GO TO PROJECT FOLDER
+----------------------------------------
+
+Example:
+
+cd ~/berkeley
+
+========================================
+STEP 3 : RUN SERVER
+========================================
+
+Open terminal 1:
+
+python3 server.py
+
+OR
+
+python server.py
+
+----------------------------------------
+INPUT
+----------------------------------------
+
+Enter number of clients: 2
+
+----------------------------------------
+SERVER STARTS
+----------------------------------------
+
+Server waits for clients to connect.
+
+Keep this terminal running.
+
+========================================
+STEP 4 : RUN CLIENTS
+========================================
+
+Open terminal 2:
+
+python3 client.py
+
+----------------------------------------
+INPUT
+----------------------------------------
+
+Enter server IP:
+localhost
+
+OR
+
+127.0.0.1
+
+----------------------------------------
+OPEN ANOTHER TERMINAL
+----------------------------------------
+
+Run second client:
+
+python3 client.py
+
+Again enter:
+
+localhost
+
+========================================
+WHAT HAPPENS
+========================================
+
+1. Clients send local time
+2. Server collects all times
+3. Server computes average time
+4. Server sends correction value
+5. Clients adjust clocks
+
+========================================
+EXPECTED OUTPUT
+========================================
+
+--------------- SERVER ---------------
+
+Client 1 Time: 12:30:10
+Client 2 Time: 12:30:15
+Server Time: 12:30:12
+Average Time: 12:30:12
+
+--------------- CLIENT ---------------
+
+Local Time: 12:30:10
+Adjusted Time: 12:30:12
+
+========================================
+PART 2 : RUNNING ON DIFFERENT MACHINES
+========================================
+
+========================================
+REQUIREMENTS
+========================================
+
+1. Both systems connected to same network
+2. Python installed on both systems
+3. Same client.py available on client machine
+4. Same server.py available on server machine
+
+========================================
+STEP 1 : FIND SERVER IP
+========================================
+
+On SERVER machine:
+
+hostname -I
+
+Example:
+
+192.168.1.10
+
+========================================
+STEP 2 : RUN SERVER
+========================================
+
+On SERVER machine:
+
+python3 server.py
+
+----------------------------------------
+INPUT
+----------------------------------------
+
+Enter number of clients: 2
+
+Keep terminal running.
+
+========================================
+STEP 3 : RUN CLIENT
+========================================
+
+On CLIENT machine:
+
+python3 client.py
+
+----------------------------------------
+INPUT
+----------------------------------------
+
+Enter server IP:
+192.168.1.10
+
+Use actual server IP.
+
+========================================
+STEP 4 : RUN OTHER CLIENTS
+========================================
+
+Run additional clients similarly.
+
+========================================
+WHAT HAPPENS INTERNALLY
+========================================
+
+1. Clients connect to server socket
+2. Clients send local timestamps
+3. Server acts as Time Daemon
+4. Server computes average clock time
+5. Server sends correction offsets
+6. Clients synchronize clocks
+
+========================================
+COMMON ERRORS
+========================================
+
+1. Connection Refused
+=> Server not running
+
+2. Timeout Error
+=> Wrong IP address
+
+3. Address already in use
+=> Port already occupied
+
+4. Firewall blocked
+=> Allow port 9999
+
+========================================
+IMPORTANT NOTES
+========================================
+
+1. Port used:
+9999
+
+2. Infinite loop in server acts as daemon
+
+3. random.uniform(-5,5)
+simulates different clocks
+
+4. Use Ctrl + C to stop program
+
+========================================
+EXAMPLE COMMANDS
+========================================
+
+Run Server:
+python3 server.py
+
+Run Client:
+python3 client.py
+
+========================================
