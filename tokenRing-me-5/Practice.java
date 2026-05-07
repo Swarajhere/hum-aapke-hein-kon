@@ -30,7 +30,7 @@ public class Practice {
             token = (token + 1) % n;
         }
 
-        System.out.println("\n Token " + token + "reached sender " + sender);
+        System.out.println("\n Token reached sender " + sender);
 
         System.out.println("Process " + sender + " enters Critical Section");
 

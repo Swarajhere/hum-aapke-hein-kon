@@ -31,8 +31,8 @@ class TokenRingElection {
         }
 
         System.out.println("\nProcess "
-                           + initiator +
-                           " starts election\n");
+                + initiator +
+                " starts election\n");
 
         int current = initiator;
         int maxId = initiator;
@@ -58,3 +58,37 @@ class TokenRingElection {
         sc.close();
     }
 }
+
+// sairaj token ring-
+// class TokenRingElection {
+
+// public static void main(String[] args) {
+
+// int n = 5;
+// boolean[] active = { true, true, true, true, true };
+
+// int initiator = 2;
+
+// System.out.println("Process " + initiator +
+// " starts election\n");
+
+// int current = initiator;
+// int maxId = initiator;
+
+// do {
+
+// System.out.println("Election message passed from "
+// + current + " to "
+// + ((current + 1) % n));
+
+// if (active[current] && current > maxId) {
+// maxId = current;
+// }
+
+// current = (current + 1) % n;
+
+// } while (current != initiator);
+
+// System.out.println("\nLeader elected is: " + maxId);
+// }
+// }
